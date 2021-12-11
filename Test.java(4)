@@ -1,0 +1,39 @@
+package tests;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import Helpers.helpers;
+import pages.PageLogin;
+
+public class Tests {
+	private WebDriver driver;
+	@BeforeMethod
+	public void setUp() {
+		DesiredCapabilities caps = new DesiredCapabilities();
+		System.setProperty("webdriver.chrome.driver", "webdrivers/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		System.out.println("------------------ACCIONES--REALIZADAS------------------");
+		driver.navigate().to("https://www.consultoriaglobal.com.ar/cgweb/");
+		System.out.println("|1) Se abre la pagina principal de Global              |");
+		helpers helper = new helpers();
+		helper.stopTime(2);
+	}
+	@Test
+	public void pruebaUno() {
+		PageLogin pageLogin = new PageLogin(driver);
+		pageLogin.login("user name", "user@user.com", "Automatización", "Esta es una automatización hecha con Java y Selenium", "wXyZ");
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"wpcf7-f1297-p370-o1\"]/form/div[2]")).getText().contains("Ocurrió un error de validación."));
+	}
+	@AfterMethod
+	public void tearDown() {
+		driver.close();
+	}
+}
