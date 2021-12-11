@@ -1,0 +1,27 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+import Helpers.helpers;
+
+public class PageLogin {
+	private WebDriver driver;
+	public PageLogin(WebDriver driver) {
+		this.driver = driver;
+	}
+	
+	public void login(String user,String mail,String subject,String message,String captcha) {
+		driver.findElement(By.xpath("//*[@id=\"menu-item-1364\"]/a")).click();
+		driver.findElement(By.name("your-name")).sendKeys(user);
+		driver.findElement(By.name("your-email")).sendKeys(mail);
+		helpers helper = new helpers();
+		helper.stopTime(2);
+		driver.findElement(By.name("your-subject")).sendKeys(subject);
+		driver.findElement(By.name("your-message")).sendKeys(message);
+		driver.findElement(By.name("captcha-636")).sendKeys(captcha);
+		driver.findElement(By.xpath("//*[@id=\"wpcf7-f1297-p370-o1\"]/form/p[7]/input")).click();
+		helper.stopTime(2);
+	}
+}
+
